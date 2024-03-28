@@ -1,0 +1,4 @@
+flask
+flask_sqlalchemy
+g4f
+langdetect

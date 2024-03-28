@@ -1,0 +1,172 @@
+.context-menu {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    width: 200px;
+    z-index: 1;
+}
+
+.context-menu a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+}
+
+.context-menu a:hover {
+    background-color: #f0f0f0;
+}
+.folder {
+    display: block;
+    cursor: pointer;
+    padding: 5px;
+    border: 1px solid #ccc;
+    margin-top: 5px;
+    margin-left: 20px;  
+    background-color: #f5f5f5;
+    position: relative;  
+}
+
+.folder-icon {
+    display: inline-block;
+    position: absolute;
+    left: -50px;  
+    top: 50%;
+    transform: translateY(-50%);  
+    width: 45px;
+    height: 45px;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.closed-icon {
+    background-image: url('uploads/system_icon/folder-closed.png');
+    background-repeat: no-repeat;
+    background-position: center;
+
+}
+
+.open-icon {
+    background-image: url('uploads/system_icon/folder-open.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 55px;
+    height:55px;
+}
+
+.folder-children {
+    margin-left: 30px; 
+    display: none;
+}
+
+.folder-children a {
+    display: block; 
+    padding: 5px 10px; 
+    margin-top: 5px; 
+    border: 1px solid #ccc; 
+    background-color: #f5f5f5; 
+    color: #333; 
+    position: relative; 
+    text-decoration: none; 
+    transition: background-color 0.3s ease; 
+}
+
+
+.folder-children a::before {
+    content: ''; 
+    display: inline-block; 
+    width: 16px; 
+    height: 16px;
+    background-image: url('uploads/system_icon/link.png'); 
+    background-size: cover; 
+    margin-right: 10px; 
+    vertical-align: middle;
+}
+
+
+.folder-children a:hover {
+    background-color: #e5e5e5; 
+}
+.highlighted {
+    border: 2px solid #007bff;
+}
+
+.file {
+    display: block;
+    padding: 5px 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    background-color: #f5f5f5;
+    color: #333;
+    position: relative;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+
+.file::before {
+    content: ''; 
+    display: inline-block; 
+    width: 35px;
+    height: 35px;
+    margin-right: 10px;
+    vertical-align: middle;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.file[data-type="pdf"]::before {
+    background-image: url('uploads/system_icon/pdf.png');
+}
+
+.file[data-type="doc"]::before, 
+.file[data-type="docx"]::before {
+    background-image: url('uploads/system_icon/doc.png');
+}
+
+.file[data-type="xls"]::before, 
+.file[data-type="xlsx"]::before {
+    background-image: url('uploads/system_icon/xls.png');
+}
+
+.file[data-type="ppt"]::before, 
+.file[data-type="pptx"]::before {
+    background-image: url('uploads/system_icon/ppt.png');
+}
+
+.file[data-type="txt"]::before {
+    background-image: url('uploads/system_icon/txt.png');
+}
+
+.file:hover {
+    background-color: #e5e5e5;
+}
+
+#link-name,#link-url,#searchInput {
+    width: 45%;
+    min-height: 40px;
+    margin-right: 15px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    vertical-align: middle;
+    line-height: 1.5;
+    font-size: 1.2em;
+    overflow-y: auto;
+    resize: vertical;
+    outline: none;
+}
+#link-name:focus,#link-url:focus,#searchInput:focus {
+  border-color: #007bff;
+}
+
+#file-input{
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: #ffffff;
+    border: none;
+    width: 20%;
+    border-radius: 5px;
+    font-size: 15px;
+    cursor: pointer;
+}

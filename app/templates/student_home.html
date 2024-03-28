@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="uploads/system_icon/favicon.png" type="image/x-icon">
+    <title>Навчання</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='education.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='student_list.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='schedule.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='edu_mat.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='courses.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <ul class="tabs">
+                <li><a href="#" class="nav-button" onclick="showContent('content-journal'); ">ЖУРНАЛ</a>
+                </li>
+                <li><a href="#" class="nav-button" onclick="showContent('content-notes'); " id="notes-link">НОТАТКИ</a>
+                </li>
+                <li><a href="#" class="nav-button" onclick="showContent('content-schedule-students'); ">ГРАФІК
+                        ЗАНЯТЬ</a></li>
+                <li><a href="#" class="nav-button" onclick="showContent('content-educational-materials-students'); ">НАВЧАЛЬНІ
+                        МАТЕРІАЛИ</a></li>
+                <li><a href="#" class="nav-button" onclick="showContent('content-courses'); ">КУРСИ</a>
+                </li>
+                <li><a href="#" class="nav-button" onclick="showContent('content-assistent'); ">АСИСТЕНТ</a>
+                </li>
+                <li><a href="#" class="nav-button" onclick="showContent('content-help'); ">ДОПОМОГА У ВИКОРИСТАННІ</a>
+                </li>
+            </ul>
+
+            <div class="user-info">
+                <div class="user-details">
+                    <span class="user-info-text">{{ user.username }}: учень {{ user.user_class }} {{ user.user_subclass
+                        }} класу </span>
+                    <div class="user-icon">
+                        <img src="{{ url_for('static', filename='uploads/user_icon/' + user.profile_photo if user.profile_photo else 'uploads/user_icon/user.png') }}"
+                            alt="{{ user.username }}'s profile photo">
+                    </div>
+                </div>
+                <a href="{{ url_for('main.logout') }}" class="logout-button" title="Logout"></a>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div id="dynamic-content" class="hidden">
+            <div id="content-journal" class="content">
+                <label for="trimester-selector">Виберіть місяць/триместр:</label>
+                <select id="trimester-select">
+                    <optgroup label="Перший триместр">
+                        <option value="1-09">Вересень</option>
+                        <option value="1-10">Жовтень</option>
+                        <option value="1-11">Листопад</option>
+                    </optgroup>
+                    <optgroup label="Другий триместр">
+                        <option value="2-12">Грудень</option>
+                        <option value="2-01">Січень</option>
+                        <option value="2-02">Лютий</option>
+                    </optgroup>
+                    <optgroup label="Третій триместр">
+                        <option value="3-03">Березень</option>
+                        <option value="3-04">Квітень</option>
+                        <option value="3-05">Травень</option>
+                    </optgroup>
+                </select>
+                <div id="table-container"></div>
+            </div>
+            <div id="content-notes" class="content">
+                <div class="note-container">
+                    <input type="text" id="note-title" placeholder="Note Title" value="Нотатка #">
+                    <textarea id="user-notes" placeholder="Напишіть щось..."></textarea>
+                </div>
+                <button id="save-note-btn" onclick="saveNotes()">Зберегти</button>
+                <div id="saved-notes-list"></div>
+            </div>
+            <div id="content-schedule-students" class="content">
+                <p>Графік заннять</p>
+                 <button id="save-note-btn" onclick=" fetchAndDisplayStudentSchedule(userClass, userSubclass);">Оновити</button>
+                <div class="schedule-wrapper" id="schedule-students"></div>
+            </div>
+            <div id="content-educational-materials-students" class="content">
+                <input type="text" id="searchInput" placeholder="Пошук папок, файлів або посилань...">
+                 <div class="folder root-folder">
+                    <span class="folder-icon closed-icon"></span>
+                    ІНФОРМАЦІЙНІ ТЕХНОЛОГІЇ
+                    <div class="folder-children"></div>
+                </div>          
+            </div>
+            <div id="content-courses" class="content">
+                <input type="hidden" id="userId" value="{{ user.id }}" />
+                <h3 id="content-courses-header">Активних курсів немає, можна відпочити!</h3>
+                <div id="coursesList"></div>
+            </div>
+            <div id="content-assistent" class="content">
+                <input type="text" id="userInput" placeholder="Введіть ваше питання тут">
+                <button onclick="sendMessage()">Запитати</button>
+                <div id="response-container"></div>
+                <div id="loading-container"><img id="loading" src="{{ url_for('static', filename='uploads/system_icon/loading.gif') }}" alt="Завантаження..." style="display: none;"></div>
+            </div>
+            <div id="content-help" class="content">
+                <h3  id="title-header">Вітаю, <span style="color:#007bff;">{{ user.username }}</span>. Оберіть категорію для отримання детальної інформації.</h3>
+                <button class="help-button" data-topic="courses">Допомога з журналом</button>
+                <button class="help-button" data-topic="notes">Допомога з нотатками</button>
+                <button class="help-button" data-topic="schedule">Допомога з графіком занять</button>
+                <button class="help-button" data-topic="materials">Допомога з навчальними матеріалами</button>
+                <button class="help-button" data-topic="exams">Допомога з курсами</button>
+                <div id="help-text"></div>
+            </div>
+        </div>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ url_for('static', filename='js/user.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/notes.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/ui-interactions.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/schedule_students.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/edu_mat.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/edu_mat_students.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/studentCourses.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/attendanceLog_students.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/assistent.js') }}"></script>
+    <script>var userClass = "{{ user.user_class }}";
+        var userSubclass = "{{ user.user_subclass }}";
+        var userId = "{{ user.id }}";
+        </script>
+</body>
+
+</html>

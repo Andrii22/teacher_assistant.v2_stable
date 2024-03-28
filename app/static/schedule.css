@@ -1,0 +1,69 @@
+#content-schedule-students {
+    font-family: 'Montserrat', sans-serif;
+    color: #333;
+}
+
+#content-schedule-students table {
+    display: inline-table;   
+    margin-right: 20px;    
+    vertical-align: top;    
+    width: auto; 
+    max-width: 150px;
+    min-width: 120px;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+}
+#content-schedule-students .schedule-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+#content-schedule-students td,
+#content-schedule-students th {
+    padding: 8px;
+    border: 1px solid #ccc;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    
+}
+
+#content-schedule-students input[type="time"] {
+    max-width: 120px;
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+}
+
+#content-schedule-students input[type="time"]:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+#content-schedule-students button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    background-color: #007bff;
+    color: #fff;
+}
+
+#content-schedule-students button:hover {
+    background-color: #0056b3;
+}
+
+#content-schedule-students .selectors {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+#content-schedule-students .selectors label,
+#content-schedule-students .selectors select {
+    font-size: 16px;
+}

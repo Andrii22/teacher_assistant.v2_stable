@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+    <div id="dynamic-content" class="hidden">
+        <div id="content-students" class="content">
+            <h2>Students</h2>
+            <table>
+                <tbody id="user-list">
+                    {% for student in students %}
+                    <tr>
+                        <td><input type="checkbox" class="user-checkbox" data-user-id="{{ student.id }}"></td>
+                        <td>{{ student.username }}</td>
+                        <td>{{ student.user_class }}</td>
+                        <td>{{ "Онлайн" if student.is_online else "Офлайн" }}</td>
+                        <td>{{ student.ip_address }}</td>
+                        <td class="user-status">{{ student.status }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

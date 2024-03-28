@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Реєстрація</title>
+    <link rel="icon" href="static/uploads/system_icon/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='register.css') }}">
+</head>
+
+<body>
+    <section class="container">
+
+        <nav class="navigation">
+            <a href="{{ url_for('main.index') }}">
+                <img src="{{ url_for('static', filename='uploads/system_icon/back.png') }}" alt="Go back to homepage">
+            </a>
+        </nav>
+
+        <header>
+            <h1>Реєстрація</h1>
+        </header>
+
+        <main>
+            <figure class="image-container">
+                <img src="static/uploads/user_icon/user.png" alt="User Profile Picture" id="user-image">
+                <figcaption id="image-overlay">Обрати фото профілю</figcaption>
+            </figure>
+
+            <form method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="username">Логін</label>
+                    <input type="text" id="username" name="username" placeholder="Введіть логін" required>
+                </div>
+                <div class="form-group">
+                    <label for="user_class">Клас</label>
+                    <div class="class-selection">
+                        <select id="user_class" name="user_class" class="class-number full-width-select" required>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                        </select>
+                        <select id="user_subclass" name="user_subclass" class="class-letter full-width-select" required>
+                            <option value="A">A</option>
+                            <option value="Б">Б</option>
+                            <option value="B">B</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Пароль</label>
+                    <input type="password" id="password" name="password" placeholder="Введіть пароль" required>
+                </div>
+                <input type="file" id="profile_photo" name="profile_photo">
+                <button type="submit" class="btn-register">Зареєструвати</button>
+            </form>
+            <div class="flashes">
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {% endwith %}
+            </div>
+            </div>
+            </form>
+            <section class="flashes">
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {% endwith %}
+            </section>
+
+        </main>
+    </section>
+    <script src="{{ url_for('static', filename='js/register.js') }}"></script>
+</body>
+
+</html>

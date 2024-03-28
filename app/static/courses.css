@@ -1,0 +1,302 @@
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: #333; 
+  font-family: 'Montserrat', sans-serif; 
+}
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 10px;
+  width: 85%;
+ height: auto;
+  overflow-y: auto;
+  padding-bottom: 50px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: #333; 
+  font-family: 'Montserrat', sans-serif; 
+}
+#help-text, #tittle-header {
+  font-size: 25px; 
+  color: #333; 
+  font-family: 'Montserrat', sans-serif; 
+}
+
+
+#response{
+  font-size: 25px; 
+  color: #333; 
+  font-family: 'Montserrat', sans-serif; 
+}
+
+
+.modal-footer {
+  position: sticky;
+  bottom: 0;
+  background: #fefefe;
+  padding: 10px;
+  border-top: 1px solid #888;
+}
+
+
+.course-item,
+.question-container,
+.answer-container {
+  margin-bottom: 10px;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.course-title {
+  font-size: 25px;
+}
+
+.course-actions {
+  text-align: right;
+}
+
+.course-actions button,
+button {
+  margin-left: 10px;
+  margin-top: 10px;
+  margin-bottom: 20px; 
+}
+
+.course-info {
+  color: #555;
+  font-size: 20px;
+  margin-bottom: -10px; 
+}
+
+.icon-btn,
+.delete-btn,
+.add-btn {
+  margin-left: 5px;
+  margin-right: 15px;
+}
+
+.answer .delete-btn {
+  width: 25px;
+  height: 25px;
+}
+
+.question .delete-btn {
+  width: 40px;
+  height: 40px;
+}
+
+
+
+.pointsInput {
+  width: 100px;
+  min-height: 30px;
+  margin-right: 15px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  transition: border-color 0.3s ease-in-out;
+  vertical-align: middle;
+  line-height: 1.5;
+  font-size: 1.1em;
+  overflow-y: auto;
+  resize: vertical;
+  outline: none;
+}
+
+input[type="text"]:focus,
+.pointsInput:focus {
+  border-color: #007bff;
+}
+#newCourseName,
+textarea.answerInput,
+textarea.questionTitle {
+    width: 75%;
+    min-height: 40px;
+    margin-right: 15px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    vertical-align: middle;
+    line-height: 1.5;
+    font-size: 1.2em;
+    overflow-y: auto;
+    resize: vertical;
+    outline: none;
+}
+
+textarea.answerInput:focus,
+textarea.questionTitle:focus {
+  border-color: #007bff;
+}
+
+.save-changes-btn,
+button#createCourseButton {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 20px;
+}
+
+.form-footer {
+  text-align: center;
+  margin-top: 20px;
+  border-top: 1px solid #888;
+  padding-top: 10px;
+}
+.delete-btn_qa {
+  width: 50px;
+  height: 50px;
+  border-radius: 60%;
+  background-color: #fefefe;
+  background-image: url('./uploads/system_icon/remove.png');
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  display: flexbox;
+ vertical-align: middle;
+}
+.see_modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4); 
+  border-radius: 5px;
+}
+.see_modal-content {
+  position: relative; 
+  background-color: #fefefe;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 75%; 
+  margin: 10% auto; 
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+}
+
+.close {
+  color: #aaaaaa;
+  font-size: 35px;
+  font-weight: bold;
+  position: absolute; 
+  top: 10px; 
+  right: 10px; 
+}
+
+.close:hover,
+.close:focus {
+  color: #007bff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#modalCourseTitle {
+  text-align: center;
+  font-size: 35px; 
+}
+
+#modalQuestionsList .questionItem {
+  margin-top: 15px;
+  font-size: 25px; 
+}
+
+#modalQuestionsList .answerItem {
+  margin-left: 20px;
+  font-size: 20px; 
+  margin-top: 5px; 
+  display: block;
+}
+#courseModal {
+  display: none; 
+  position: fixed;
+  z-index: 2; 
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4); 
+}
+#courseModal .modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; 
+  padding: 20px;
+  border: 1px solid #888;
+  width: 60%; 
+  max-width: 800px; 
+}
+#courseModalTitle {
+  text-align: center;
+  font-size: 35px; 
+}
+.submit-btn-course {
+  display: block; 
+  margin: 20px auto; 
+  padding: 10px 20px; 
+  font-size: 18px; 
+  cursor: pointer; 
+}
+#testResult {
+  display: block;
+  text-align: center;
+  width: 100%;
+  margin-top: 20px;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+.modified {
+  border: 2px solid #007bff;
+}
+.attendance-table .grade-input {
+  width: 100%; 
+  box-sizing: border-box; 
+  border: 1px solid #ccc; 
+}
+#chatOutput {
+  height: 300px;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  padding: 10px;
+  overflow-y: auto;
+}
+#userInput{
+  width: 55%;
+}
+
+#loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#loading {
+  display: none; /* Спочатку приховано */
+}
+
+#response-container {
+  height: 300px;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  padding: 10px;
+  overflow-y: auto;
+  font-size: 25px; 
+  color: #333; 
+  font-family: 'Montserrat', sans-serif;
+}

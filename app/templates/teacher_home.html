@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='education.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='student_list.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='prof_devel_tableStyles.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='edu_mat.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='courses.css') }}">
+    <title>Адміністрування</title>
+    <link rel="icon" href="{{ url_for('static', filename='uploads/system_icon/favicon.png') }}" type="image/x-icon">
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="tabs">
+            <a href="#" class="nav-button" onclick="showContent('content-magazine')">ЖУРНАЛ</a>
+            <a href="#" class="nav-button" onclick="showContent('content-notes')">НОТАТКИ</a>
+            <a href="#" class="nav-button" onclick="showContent('content-schedule')">ГРАФІК ЗАНЯТТЯ</a>
+            <a href="#" class="nav-button" onclick="showContent('content-educational-materials')">НАВЧАЛЬНІ
+                МАТЕРІАЛИ</a>
+            <a href="#" class="nav-button"
+                onclick="showStudents(); showContent('content-students'); return false;">УЧНІ</a>
+            <a href="#" class="nav-button" onclick="showContent('content-certif-training')">ПІДВИЩЕННЯ
+                КВАЛІФІКАЦІЇ</a>
+            <a href="#" class="nav-button" onclick="showContent('content-courses')">КУРСИ</a>
+        </div>
+        <div class="user-info">
+            <div class="user-details">
+                <span class="user-info-text">{{ user.username }}: викладач</span>
+                <div class="user-icon">
+                    {% if user.profile_photo %}
+                    <img src="{{ url_for('static', filename='uploads/user_icon/' + user.profile_photo) }}"
+                        alt="{{ user.username }}" />
+                    {% else %}
+                    <img src="{{ url_for('static', filename='uploads/user_icon/user.png') }}" alt="{{ user.username }}" />
+                    {% endif %}
+                </div>
+            </div>
+            <a href="{{ url_for('main.logout') }}" class="logout-button"></a>
+        </div>
+    </div>
+    <div id="dynamic-content" class="hidden">
+        <div id="content-magazine" class="content">
+            <div class="selectors">
+                <label for="class-selector">Виберіть клас:</label>
+                <select id="class-number-select">
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                </select>
+                <label for="subclass-selector">Виберіть підклас:</label>
+                <select id="class-letter-select">
+                    <option value="A">A</option>
+                    <option value="Б">Б</option>
+                    <option value="B">B</option>
+                </select>
+                <label for="trimester-selector">Виберіть місяць/триместр:</label>
+                <select id="trimester-select">
+                    <optgroup label="Перший триместр">
+                        <option value="1-09">Вересень</option>
+                        <option value="1-10">Жовтень</option>
+                        <option value="1-11">Листопад</option>
+                    </optgroup>
+                    <optgroup label="Другий триместр">
+                        <option value="2-12">Грудень</option>
+                        <option value="2-01">Січень</option>
+                        <option value="2-02">Лютий</option>
+                    </optgroup>
+                    <optgroup label="Третій триместр">
+                        <option value="3-03">Березень</option>
+                        <option value="3-04">Квітень</option>
+                        <option value="3-05">Травень</option>
+                    </optgroup>
+                </select>
+            </div>
+            <div id="table-container">
+            </div>
+        </div>
+        <div id="content-notes" class="content">
+            <div class="note-container">
+                <input type="text" id="note-title" placeholder="Note Title" value="Нотатка #">
+                <textarea id="user-notes" placeholder="Напишіть щось..."></textarea>
+            </div>
+            <button id="save-note-btn" onclick="saveNotes()">Зберегти</button>
+            <div id="saved-notes-list"></div>
+        </div>
+        <div id="content-schedule" class="content">
+            <h2>Розклад занять</h2>
+            <div class="selectors">
+                <label for="class-selector">Виберіть клас:</label>
+                <select id="class-number-select">
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                </select>
+                <label for="subclass-selector">Виберіть підклас:</label>
+                <select id="class-letter-select">
+                    <option value="A">A</option>
+                    <option value="Б">Б</option>
+                    <option value="B">B</option>
+                </select>
+            </div>
+            <div id="schedule-container"></div>
+        </div>
+        <div id="content-educational-materials" class="content" oncontextmenu="handleContextMenu(event)">
+            <input type="text" id="searchInput" placeholder="Пошук папок, файлів або посилань...">
+            <div class="folder root-folder">
+    <span class="folder-icon closed-icon"></span>
+    ІНФОРМАЦІЙНІ ТЕХНОЛОГІЇ
+    <div class="folder-children"></div>
+</div>
+            <div id="add-folder-form" style="display:none;">
+                <input type="text" id="folder-name" placeholder="Введіть назву теки">
+                <button onclick="saveFolder()">Зберегти теку</button>
+                <button onclick="ClosesaveFolder()">Закрити</button>
+            </div>
+            <div id="add-link-form" style="display:none;">
+                <input type="text" id="link-name" placeholder="Введіть назву посилання">
+                <input type="url" id="link-url" placeholder="Введіть URL-адресу посилання">
+                <button onclick="saveLink()">Зберегти посилання</button>
+                <button onclick="ClosesaveLink()">Закрити</button>
+                
+            </div>
+            <div id="add-file-form" style="display:none;">
+                <input type="file" id="file-input">
+                <button onclick="uploadFile()">Завантажити файл</button>
+                <button onclick="ClosesaveFile()">Закрити</button>
+            </div>
+            <div id="root-folder-context-menu" class="context-menu">
+                <ul>
+                    <li onclick="showAddFolderForm()">Додати теку</li>
+                </ul>
+            </div>
+            <div id="created-folder-context-menu" class="context-menu">
+                <ul>
+                    <li onclick="showAddFolderForm()">Додати теку</li>
+                    <li onclick="showAddFileForm()">Додати файл</li>
+                    <li onclick="showAddLinkForm()">Додати посилання</li>
+                    <li onclick="editFolder()">Змінити</li>
+                    <li onclick="deleteFolder()">Видалити</li>
+                </ul>
+            </div>
+            <div id="file-context-menu" class="context-menu" >
+                <ul>
+                    <li onclick="deleteFile()">Видалити файл</li>
+                </ul>
+            </div>
+            <div id="link-context-menu" class="context-menu">
+                <ul>
+                    <li onclick="editLink()">Змінити посилання</li>
+                    <li onclick="deleteLink()">Видалити посилання</li>
+                </ul>
+            </div>
+        </div>
+        <div id="content-certif-training" class="content">
+            <table id="professional-development-table">
+                <thead>
+                    <tr>
+                        <th>Теми (напрямки навчення програми підвищення кваліфікації)</th>
+                        <th>Форми навчання (очна, заочна, дистанційна)</th>
+                        <th>Вид навчання (за програмаю підвищення кваліфікації, семінари, тренінги, вебінари)</th>
+                        <th>Суб'єкт підвищення кваліфікації (у кого)</th>
+                        <th data-column="certificate_number">Номер сертифіката</th>
+                        <th data-column="hours">Кількість годин</th>
+                        <th data-column="date">Строки</th>
+                        <th>Сертифікат</th>
+                        <th>Дія</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr id="input-row">
+                        <td><input type="text" class="input-cell" name="topic"></td>
+                        <td><input type="text" class="input-cell" name="form_of_training"></td>
+                        <td><input type="text" class="input-cell" name="type_of_training"></td>
+                        <td><input type="text" class="input-cell" name="subject_of_improvement"></td>
+                        <td><input type="text" class="input-cell" name="certificate_number"></td>
+                        <td><input type="text" class="input-cell" name="hours"></td>
+                        <td><input type="text" class="input-cell" name="date"></td>
+                        <td><input type="text" class="input-cell" name="certificate"></td>
+                        <td><button id="save-new-button">Зберегти</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="content-courses" class="content">
+            <div id="coursesList" class="blur"></div>
+            <button   id="createCourseButton" onclick="showCourseCreationForm()">Створити курс</button>
+
+            <div id="courseCreationModal" style="display: none;" class="modal-content-form">
+                <div class="modal-content">
+                    <div class="form-header">
+                        <div>
+                            <label style="font-size: 20px;" for="newCourseName">Назва курсу:</label>
+                            <input type="text" id="newCourseName">
+                        </div>
+                        <div>
+                            <label style="font-size: 20px;" for="courseActiveCheckbox">Активний курс:</label>
+                            <input type="checkbox" id="courseActiveCheckbox" checked>
+                        </div>
+                        <div>
+                            <label style="font-size: 20px;" for="courseTimeLimit">Обмеження по часу (хв, 0 якщо не потрібно):</label>
+                            <input type="number" id="courseTimeLimit" class="pointsInput" min="0">
+                        </div>
+                        <div>
+                            <label style="font-size: 20px;" for="courseAttemptLimit">Кількість спроб:</label>
+                            <input type="number" class="pointsInput" id="courseAttemptLimit" min="1" value="1">
+                        </div>
+                    </div>
+                    <div id="questionsContainer"></div>
+                    <div class="form-footer">
+                        <button onclick="addQuestion()">Додати питання</button>
+                        <button onclick="submitNewCourse()">Зберегти курс</button>
+                        <button onclick="closeCourseCreationForm()">Закрити</button>
+                    </div>
+                </div>
+            </div>
+            <div id="seeModal" class="see_modal">
+                <div class="see_modal-content">
+                  <span class="close" onclick="closeSeeModal()">&times;</span>
+                  <h2 id="modalCourseTitle"></h2>
+                  <div id="modalQuestionsList"></div>
+                </div>
+              </div>
+
+          </div>
+
+        <div id="content-students" class="content">
+            <input type="text" id="username-filter" placeholder="Фільтрування за назвою">
+            <input type="text" id="class-filter" placeholder="Фільтрування за класом">
+            <select id="online-filter">
+                <option value="">Всі</option>
+                <option value="Онлайн">Онлайн</option>
+                <option value="Офлайн">Офлайн</option>
+            </select>
+            <select id="status-filter">
+                <option value="all">Всі</option>
+                <option value="Активний">Активні</option>
+                <option value="Заблоковано">Заблоковані</option>
+            </select>
+            <button id="delete-selected">Видалити</button>
+            <button id="block-selected">Заблокувати</button>
+            <button id="unblock-selected">Розблокувати</button>
+            <input type="text" id="table-search" placeholder="Пошук по таблиці">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Обрати всіх <input type="checkbox" id="select-all-users"></th>
+                        <th>Назва профілю</th>
+                        <th>Клас</th>
+                        <th>Онлайн статус</th>
+                        <th>IP-адреса</th>
+                        <th>Статус в системі</th>
+                    </tr>
+                </thead>
+                <tbody id="user-list">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ url_for('static', filename='js/user.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/notes.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/prof_devel.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/ui-interactions.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/edu_mat.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/schedule.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/courses.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/attendanceLog.js') }}" defer></script>
+</body>
+
+</html>
